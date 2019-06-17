@@ -9,15 +9,27 @@
 import SwiftUI
 
 struct PopularList : View {
+    @EnvironmentObject var viewModel: PopularListViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            
+            List {
+                ForEach([0,1]) { i in
+                    Text("text")
+                }
+            }.navigationBarTitle(Text("Popular"))
+            }.onAppear {
+                self.viewModel.fetchMovie()
+        }
+        
     }
 }
 
 #if DEBUG
 struct PopularList_Previews : PreviewProvider {
     static var previews: some View {
-        PopularList()
+        PopularList().environmentObject(PopularListViewModel())
     }
 }
 #endif

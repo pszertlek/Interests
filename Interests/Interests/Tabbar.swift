@@ -11,12 +11,12 @@ import SwiftUI
 struct Tabbar : View {
     var body: some View {
         TabbedView {
-            PopularList()
+            PopularList().environmentObject(PopularListViewModel())
                 .tabItemLabel(Text("Popular"))
                 .tag(0)
             MyLists()
                 .tabItemLabel(Text("My List"))
-                .tag(0)
+                .tag(1)
         }.edgesIgnoringSafeArea(.top).accentColor(.red)
     }
 }
