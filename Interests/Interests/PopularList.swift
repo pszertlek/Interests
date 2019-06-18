@@ -10,18 +10,19 @@ import SwiftUI
 
 struct PopularList : View {
     @EnvironmentObject var viewModel: PopularListViewModel
-    
+    @State var searchText: String = ""
+
     var body: some View {
         NavigationView {
-            
-            List {
-                ForEach([0,1]) { i in
-                    Text("text")
+                List {
+
+                    ForEach(self.viewModel.movieSubjectList) {id in
+                        
+                        Text(id.title)
+                    }
                 }
-            }.navigationBarTitle(Text("Popular"))
-            }.onAppear {
-                self.viewModel.fetchMovie()
-        }
+            }
+            
         
     }
 }

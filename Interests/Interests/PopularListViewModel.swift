@@ -12,11 +12,19 @@ import SwiftUI
 
 
 class PopularListViewModel: BindableObject {
+    var searchText = ""
     var didChange = PassthroughSubject<PopularListViewModel, Never>()
     
     var movieList: [Int]
     var title: String?
-    
+    var popularMovies: MoviePageResponse<MovieSubject>?
+    var movieSubjectList: [MovieSubject] {
+        if self.popularMovies != nil {
+            return self.popularMovies!.subjects
+        } else {
+            return []
+        }
+    }
     init() {
         movieList = []
     }
@@ -30,15 +38,18 @@ class PopularListViewModel: BindableObject {
     
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let movieResponse = try! decoder.decode(MoviePageResponse<MovieSubject>.self, from: data) 
-//                    return
-//                }
-                self.title = movieResponse.title
+                guard let movieResponse = try? decoder.decode(MoviePageResponse<MovieSubject>.self, from: data) else {
+                    return
+                }
+                if self.popularMovies != nil {
+                    self.popularMovies?.subjects.append(contentsOf: movieResponse.subjects)
+                } else {
+                    self.popularMovies = movieResponse
+                }
+                self.didChange.send(self)
                 print(movieResponse)
-                
             }
-                
-                
         }
     }
+    
 }

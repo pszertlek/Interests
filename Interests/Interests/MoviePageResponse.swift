@@ -10,45 +10,56 @@ import Foundation
 import SwiftUI
 
 struct AvatarsSize: Codable {
-    var large: String
-    var medium: String
-    var small: String
+    var large: String?
+    var medium: String?
+    var small: String?
 }
 
 struct MovieCast: Codable {
     var alt: String?
-    var avatars: AvatarsSize
-    var id: Int
+    var avatars: AvatarsSize?
+    var id: String?
     var name: String?
     var name_en: String?
 }
 
 struct MovieRating: Codable {
-    var average: String
+    var average: Float
     var details: [Int: Int]
     var max: Int
     var min: Int
-    var stars: Int
+    var stars: String?
 }
 
 struct MovieSubject: Codable, Identifiable {
-    var alt: String
-    var id: String
-    var casts: [MovieCast]
-    var collectCount: Int
-    var directors: [MovieCast]
-    var durations: [String]
-    var genres: [String]
-    var has_video: Int
-    var images: AvatarsSize
-    var mainlandPubdate: String
-    var originalTitle: String
-    var pubdates: [String]
     var rating: MovieRating
+    var genres: [String]
+    var title: String?
+    var casts: [MovieCast]
+
+    var durations: [String]
+
+    var collectCount: Int
+
+    var mainlandPubdate: String
+
+    var hasVideo: Bool
+
+    var originalTitle: String
+
     var subtype: String
-    var title: String
-    var year: Int
-    
+
+    var directors: [MovieCast]
+
+    var pubdates: [String]
+    var year: String
+
+    var images: AvatarsSize
+
+    var alt: String?
+
+    var id: String
+
 }
 
 
