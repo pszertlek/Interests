@@ -14,16 +14,11 @@ struct PopularList : View {
 
     var body: some View {
         NavigationView {
-                List {
-
-                    ForEach(self.viewModel.movieSubjectList) {id in
-                        
-                        Text(id.title)
-                    }
-                }
+            List([1,2,3]) { element in
+                MovieRow(movie:sampleMovie)
             }
             
-        
+        }
     }
 }
 

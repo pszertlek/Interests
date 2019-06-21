@@ -29,8 +29,9 @@ class PopularListViewModel: BindableObject {
         movieList = []
     }
     
+    
     func fetchMovie() {
-        movieProvider.request(.getInTheaters) { result in
+        movieProvider.request(.fetchPopular) { result in
             if case let .success(response) = result {
                 print(response)
                 let data = response.data
