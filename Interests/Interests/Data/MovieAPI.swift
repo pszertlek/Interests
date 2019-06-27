@@ -15,7 +15,7 @@ public enum MovieAPI {
     case getInTheaters
     case fetchPopular
     case fetchTopRated
-    case fetchUpcoming
+    case fetchUpcoming(region: String)
     case fetchDetail(movie: Int)
     case fetchRecommanded(movie: Int)
     case fetchSimilar(movie: Int)
@@ -37,7 +37,7 @@ extension MovieAPI: TargetType {
             return "movie/popular"
         case .fetchTopRated:
             return "movie/top_rated"
-        case .fetchUpcoming:
+        case .fetchUpcoming(_):
             return "movie/upcoming"
         case let .fetchDetail(movie):
             return "movie/\(String(movie))"
@@ -65,6 +65,12 @@ extension MovieAPI: TargetType {
     
     /// The type of HTTP task to be performed.
     public var task: Task {
+        switch self {
+        case .fetchUpcoming(let region):
+            return .requestJSONEncodable(["region":region])
+        default:
+            return .requestPlain
+        }
         return .requestPlain
     }
     
@@ -77,5 +83,6 @@ extension MovieAPI: TargetType {
     public var headers: [String: String]? {
         return nil
     }
+    
     
 }
