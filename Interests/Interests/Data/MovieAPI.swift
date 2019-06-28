@@ -26,30 +26,34 @@ public enum MovieAPI {
 
 extension MovieAPI: TargetType {
     /// The target's base `URL`.
+    var apiKey: String { "1d9b898a212ea52e283351e521e17871"}
+
     public var baseURL: URL { return URL(string: "https://api.themoviedb.org/3")! }
     
     /// The path to be appended to `baseURL` to form the full `URL`.
     public var path: String {
+        var path: String!
         switch self {
         case .getInTheaters:
-            return "/v2/movie/in_theaters"
+            path = "/v2/movie/in_theaters"
         case .fetchPopular:
-            return "movie/popular"
+            path = "movie/popular"
         case .fetchTopRated:
-            return "movie/top_rated"
+            path = "movie/top_rated"
         case .fetchUpcoming(_):
-            return "movie/upcoming"
+            path = "movie/upcoming"
         case let .fetchDetail(movie):
-            return "movie/\(String(movie))"
+            path = "movie/\(String(movie))"
         case let .fetchRecommanded(movie):
-            return "movie/\(String(movie))/recommendations"
+            path = "movie/\(String(movie))/recommendations"
         case let .fetchSimilar(movie):
-            return "movie/\(String(movie))/similar"
+            path = "movie/\(String(movie))/similar"
         case .fetchSearch:
-            return "search/movie"
+            path = "search/movie"
         case let .credits(movie):
-            return "movie/\(String(movie))/credits"
+            path = "movie/\(String(movie))/credits"
         }
+        return path
     }
     
     /// The HTTP method used in the request.
@@ -67,9 +71,10 @@ extension MovieAPI: TargetType {
     public var task: Task {
         switch self {
         case .fetchUpcoming(let region):
-            return .requestJSONEncodable(["region":region])
+            return .requestJSONEncodable(["region":region,"api_key":apiKey])
         default:
-            return .requestPlain
+            return .requestCompositeData(bodyData: Data(), urlParameters: ["api_key":apiKey])
+            return .requestJSONEncodable(["api_key":apiKey])
         }
         return .requestPlain
     }

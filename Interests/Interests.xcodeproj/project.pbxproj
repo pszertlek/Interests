@@ -173,6 +173,7 @@
 		1853F5C522B3B3DD001DAAE0 /* Interests */ = {
 			isa = PBXGroup;
 			children = (
+				18BEA1B522C5F05700329D45 /* Services */,
 				18BEA18F22C4919100329D45 /* flux */,
 				18BA61FB22BCD90900B15936 /* Models */,
 				1860B7CB22B7396600311B6A /* Data */,
@@ -187,7 +188,6 @@
 				18BA61F322BB2F7500B15936 /* MovieRow.swift */,
 				18BEA1A322C5C06000329D45 /* MoviePosterImage.swift */,
 				18BEA1A522C5C09300329D45 /* ImageLoader.swift */,
-				18BEA1A722C5C0FF00329D45 /* ImageService.swift */,
 				18BEA1AD22C5C35D00329D45 /* MovieDetail.swift */,
 				18BEA1AF22C5C38E00329D45 /* MovieBackdrop.swift */,
 				18BEA1B122C5C3B700329D45 /* CastsRow.swift */,
@@ -278,6 +278,14 @@
 				18BEA19D22C4965100329D45 /* CastsState.swift */,
 			);
 			path = state;
+			sourceTree = "<group>";
+		};
+		18BEA1B522C5F05700329D45 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				18BEA1A722C5C0FF00329D45 /* ImageService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		8D4C9DCEA8243DC60EF33060 /* Pods */ = {
