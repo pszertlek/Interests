@@ -8,16 +8,44 @@
 
 import SwiftUI
 
-struct MoviewsList : View {
+struct MoviesList : View {
+    @EnvironmentObject var state: AppState
+    @State var searchtext: String = ""
+    
+    let movies: [Int]
+    
+    var isSearching: Bool {
+        return !searchtext.isEmpty
+    }
+    
+    var searchedMovies: [Int] {
+        return state.moviesState.search[searchtext] ?? []
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            List {
+                TextField($searchtext,
+                          placeholder: Text("Search any movies")) {
+                            store.dispatch(action: MoviesActions.FetchSearch(query: self.searchtext))
+                    }
+                    .textFieldStyle(.roundedBorder)
+                    .listRowInsets(EdgeInsets())
+                    .padding()
+                ForEach(isSearching ? searchedMovies : movies) {id in
+                    NavigationButton(destination: MovieDetail(movieId: id)) {
+                        MovieRow(movieId: id)
+                    }
+                }
+            }
+        }
     }
 }
 
 #if DEBUG
-struct MoviewsList_Previews : PreviewProvider {
+struct MoviesList_Previews : PreviewProvider {
     static var previews: some View {
-        MoviewsList()
+        MoviesList(movies: [sampleMovie.id]).environmentObject(sampleStore)
     }
 }
 #endif

@@ -9,15 +9,14 @@
 import SwiftUI
 
 struct PopularList : View {
-    @EnvironmentObject var viewModel: PopularListViewModel
-    @State var searchText: String = ""
-
+    @EnvironmentObject var state: AppState
+    
     var body: some View {
         NavigationView {
-            List([1,2,3]) { element in
-                MovieRow(movie:sampleMovie)
-            }
-            
+            MoviesList(movies: state.moviesState.popular)
+                .navigationBarTitle(Text("Popular"))
+            }.onAppear {
+                store.dispatch(action: MoviesActions.FetchPopular())
         }
     }
 }
@@ -25,7 +24,10 @@ struct PopularList : View {
 #if DEBUG
 struct PopularList_Previews : PreviewProvider {
     static var previews: some View {
-        PopularList().environmentObject(PopularListViewModel())
+        NavigationView {
+            PopularList().environmentObject(sampleStore)
+        }
     }
 }
 #endif
+

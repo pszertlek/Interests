@@ -11,7 +11,7 @@ import Foundation
 struct MoviesReducer: Reducer {
     func reduce(state: MoviesState, action: Action) -> MoviesState {
         var state = state
-        /**
+        
  
         if let action = action as? MoviesActions.SetPopular {
             state.popular = action.response.results.map{ $0.id }
@@ -54,7 +54,23 @@ struct MoviesReducer: Reducer {
         } else if let action = action as? MoviesActions.removeFromSeenlist {
             state.seenlist.remove(action.movie)
         }
- */
+ 
+        return state
+    }
+}
+
+struct CastsReducer: Reducer {
+    func reduce(state: CastsState, action: Action) -> CastsState {
+        var state = state
+        if let action = action as? CastsActions.SetMovieCasts {
+            for cast in action.response.cast {
+                state.casts[cast.id] = cast
+            }
+            for cast in action.response.crew {
+                state.casts[cast.id] = cast
+            }
+            state.castsMovie[action.movie] = action.response.cast.map{ $0.id } + action.response.crew.map{ $0.id }
+        }
         return state
     }
 }

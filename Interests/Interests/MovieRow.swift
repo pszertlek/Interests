@@ -9,23 +9,33 @@
 import SwiftUI
 
 struct MovieRow : View {
-    @State var movie: Movie
+    @EnvironmentObject var state: AppState
+    
+    let movieId: Int
+    var movie: Movie! {
+        return state.moviesState.movies[movieId]
+    }
     
     var body: some View {
         HStack {
-            
-            WebImage(url: URL(string: "https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super")!)
-            Text(movie.original_title)
-                .bold()
-
-        }
+            MoviePosterImage(imageLoader: ImageLoader(poster: movie.poster_path, size: .small))
+            VStack(alignment: .leading, spacing: 8) {
+                Text(movie.original_title).bold()
+                Text(movie.overview)
+                    .color(.secondary)
+                    .lineLimit(8)
+                    .truncationMode(.tail)
+                }.padding(.leading, 8)
+            }.padding(8)
     }
 }
 
 #if DEBUG
 struct MovieRow_Previews : PreviewProvider {
     static var previews: some View {
-        MovieRow(movie: sampleMovie).previewLayout(PreviewLayout.fixed(width: 300, height: 150))
+        List {
+            MovieRow(movieId: sampleMovie.id).environmentObject(sampleStore)
+        }
     }
 }
 #endif
